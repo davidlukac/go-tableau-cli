@@ -41,9 +41,6 @@ var (
 		Use:    "go-tableau-cli",
 		Short:  "Tableau Server CLI",
 		PreRun: internal.LoggingSetup,
-		// Uncomment the following line if your bare application
-		// has an action associated with it:
-		// Run: func(cmd *cobra.Command, args []string) { },
 	}
 )
 
@@ -63,8 +60,6 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVarP(&outputFlag, "output", "o", "text", "Output format")
 
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
@@ -77,7 +72,7 @@ func initConfig() {
 		home, err := os.UserHomeDir()
 		cobra.CheckErr(err)
 
-		// Search config in home directory with name ".cobra" (without extension).
+		// Search config in home directory with name ".tableau-cli" (without extension).
 		viper.AddConfigPath(home)
 		viper.SetConfigName(".tableau-cli")
 		viper.SetConfigType("yaml")
