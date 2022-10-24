@@ -12,7 +12,7 @@ func LoggingSetup(cmd *cobra.Command, args []string) {
 	log.SetLevel(log.DebugLevel)
 	level, err := log.ParseLevel(viper.GetString(EnvVarLogLevel))
 	if err != nil {
-		log.Warn("Failed to parse log level from config: %s", err)
+		log.Warnf("Failed to parse log level from config: %v", err)
 		level = DefaultLogLevel
 	}
 	log.SetLevel(level)
