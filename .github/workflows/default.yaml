@@ -1,0 +1,23 @@
+name: "Default Workflow"
+
+on: ["push", "pull_request"]
+
+jobs:
+  default:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+
+      - name: Set up GoLang
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.19"
+
+      - name: Go Vet
+        run: go vet $(go list ./... | grep -v /vendor/)
+
+      - uses: dominikh/staticcheck-action@v1.2.0
+        with:
+          install-go: false
+          version: "2022.1.1"

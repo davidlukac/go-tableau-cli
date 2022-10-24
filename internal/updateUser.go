@@ -34,10 +34,10 @@ func (t Tableau) UpdateUserSiteRole(username, siteRole string) (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-	if false == user.Exists {
+	if !user.Exists {
 		return user, nil
 	}
-	if strings.ToLower(siteRole) == strings.ToLower(user.Role) {
+	if strings.EqualFold(siteRole, user.Role) {
 		log.Infof("User %s already has role %s assigned.", user.Username, user.Role)
 		return user, nil
 	}
@@ -107,9 +107,10 @@ func (t Tableau) UpdateUserSiteRole(username, siteRole string) (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-	if strings.ToLower(user.Role) != strings.ToLower(updateUserResponse.User.SiteRole) ||
-		strings.ToLower(user.Role) != strings.ToLower(siteRole) {
-		return nil, fmt.Errorf("something with wrong - updated and requested roles don't match: %s - %s - %s", siteRole, updateUserResponse.User.SiteRole, user.Role)
+	if !strings.EqualFold(user.Role, updateUserResponse.User.SiteRole) ||
+		!strings.EqualFold(user.Role, siteRole) {
+		return nil, fmt.Errorf("something with wrong - updated and requested roles don't match: %s - %s - %s",
+			siteRole, updateUserResponse.User.SiteRole, user.Role)
 	}
 
 	return user, nil

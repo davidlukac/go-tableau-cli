@@ -29,7 +29,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"gopkg.in/yaml.v3"
-	"io/ioutil"
 	"os"
 	"strings"
 )
@@ -50,7 +49,7 @@ var updateUserCmd = &cobra.Command{
 	Short: "Update existing user properties",
 	Long: fmt.Sprintf(`
 Update can be done with provided username argument and %s flag, or
-with list of users and roles in YAML file with usernames and roles formatted as 
+with list of users and roles in YAML file with usernames and roles formatted as
 - username: john.smith
   role: Explorer
 `, SiteRoleFlagName),
@@ -94,7 +93,7 @@ with list of users and roles in YAML file with usernames and roles formatted as
 			}
 			log.Infof("Updating user roles from file %s", fromYamlFlag)
 
-			yamlFile, err := ioutil.ReadFile(fromYamlFlag)
+			yamlFile, err := os.ReadFile(fromYamlFlag)
 			if err != nil {
 				log.Printf("Couldn't read YAML file: %v ", err)
 			}
@@ -135,7 +134,7 @@ with list of users and roles in YAML file with usernames and roles formatted as
 					log.Errorf("[%d/%d] Failed to fetch user %s - skipping update", idx, len(users), user.Username)
 				} else {
 					if actual.Exists {
-						if strings.ToLower(actual.Role) == strings.ToLower(user.Role) {
+						if strings.EqualFold(actual.Role, user.Role) {
 							alreadySame++
 							log.Infof("[%d/%d] User %s already has role %s", idx, len(users), user.Username, actual.Role)
 						} else {
