@@ -112,7 +112,7 @@ func (t Tableau) GetUsers() ([]*User, error) {
 	pageSize := 100
 	res := make([]*User, 0)
 
-	for done == false {
+	for !done {
 		url := fmt.Sprintf("%s/sites/%s/users?pageSize=%d&pageNumber=%d", t.BaseURL, t.SiteID, pageSize, pageNumber)
 
 		log.Debugf("Fetching %d users/page %d from %s", pageSize, pageNumber, url)

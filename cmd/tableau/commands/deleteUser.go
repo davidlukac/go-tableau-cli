@@ -65,7 +65,7 @@ var deleteUserCmd = &cobra.Command{
 		}
 
 		user, err := t.GetUser(username)
-		if false == user.Exists && err == nil {
+		if !user.Exists && err == nil {
 			fmt.Printf("User %s does not exist - nothing to delete!", username)
 			os.Exit(1)
 		}
@@ -73,7 +73,7 @@ var deleteUserCmd = &cobra.Command{
 		existingAssetsUserID := ""
 		if ExistingAssetsUserName != "" {
 			existingAssetsUser, err := t.GetUser(ExistingAssetsUserName)
-			if false == existingAssetsUser.Exists && err == nil {
+			if !existingAssetsUser.Exists && err == nil {
 				fmt.Printf("User %s does not exist - can not move existing assets to them!", username)
 			}
 			existingAssetsUserID = existingAssetsUser.ID
