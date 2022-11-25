@@ -25,9 +25,10 @@ THE SOFTWARE.
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/davidlukac/go-tableau-cli/internal"
 	log "github.com/sirupsen/logrus"
-	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -38,7 +39,7 @@ var (
 	cfgFile    string
 	outputFlag string
 	rootCmd    = &cobra.Command{
-		Use:    "go-tableau-cli",
+		Use:    "tableau-cli",
 		Short:  "Tableau Server CLI",
 		PreRun: internal.LoggingSetup,
 	}
